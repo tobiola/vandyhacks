@@ -27,10 +27,15 @@
 //  }
 //);
 
-var express = require("express");
-var bodyParser = require("body-parser");
-var app = express();
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
 
+require('dotenv').config();
+
+app.set('view engine', 'ejs');
+
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -41,7 +46,6 @@ app.use(function(req, res, next) {
   return next();
 });
 
-var port = process.env.PORT || 8080;
 var router = express.Router();
 
 router.use(function(req, res, next) {
@@ -53,5 +57,5 @@ router.route("/")
     res.send("Hello");
   });
 
-server = app.listen(port);
+server = app.listen(8080);
 console.log("Express listening port: %d in %s mode.", port, app.settings.env);
