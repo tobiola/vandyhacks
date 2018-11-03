@@ -6,7 +6,9 @@
   <div>
     <div id="login">
       <h1>First, log in to spotify</h1>
-        <a href="/login">Log in</a>
+        <form method="get" action="auth/spotify">
+          <input type="submit" value="Login In"/>
+        </form>
       </div>
       <div id="loggedin">
         <script id="loggedin-template" type="text/x-handlebars-template">
