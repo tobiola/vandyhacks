@@ -5,16 +5,14 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 const passport = require('passport');
 const session = require('express-session');
 const SpotifyWebApi = require('spotify-web-api-node');
+require('dotenv').config();
 
 spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENTID,
   clientSecret: process.env.CLIENTSECRET,
 });
 
-require('dotenv').config();
-
 app.set('view engine', 'ejs');
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -25,7 +23,7 @@ app.use(bodyParser.json());
 
 app.use(session({
   secret: process.env.SESSIONSECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: true,
 //  cookie: { secure: true }
 }));
@@ -44,6 +42,22 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
+
+spotifyApi.clientCredentialsGrant().then(
+  function(data) {
+    console.log('The access token expires in ' + data.body['expires_in']);
+    console.log('The access token is ' + data.body['access_token']);
+
+    // Save the access token so that it's used in future calls
+    spotifyApi.setAccessToken(data.body['access_token']);
+  },
+  function(err) {
+    console.log(
+      'Something went wrong when retrieving an access token',
+      err.message
+    );
+  }
+)
   res.render('pages/index');
 });
 
@@ -51,6 +65,11 @@ app.get('/dashboard', function(req, res) {
   console.log(req.session.passport.user);
   console.log(req.user);
   console.log(req.cookies);
+
+
+
+
+  /*
 spotifyApi.getMe()
           .then(function(data) {
                       console.log('Some information about the authenticated user', data.body);
@@ -70,6 +89,7 @@ spotifyApi.getMe()
   res.render('pages/index', {
     
   });
+  */
 });
 
 passport.serializeUser(function(user, done) {
