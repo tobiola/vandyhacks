@@ -27,8 +27,8 @@
 //  }
 //);
 
-const express = require("express");
-const bodyParser = require("body-parser");
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
 require('dotenv').config();
@@ -40,9 +40,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, cache-control");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, cache-control');
   return next();
 });
 
@@ -52,4 +52,4 @@ app.get('/', function(req, res) {
 
 
 server = app.listen(8080);
-console.log("Express listening port: %d in %s mode.", port, app.settings.env);
+console.log('Express listening port: 8080');
