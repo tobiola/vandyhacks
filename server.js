@@ -46,16 +46,10 @@ app.use(function(req, res, next) {
   return next();
 });
 
-var router = express.Router();
-
-router.use(function(req, res, next) {
-  next();
+app.get('/', function(req, res) {
+  res.send('Hello');
 });
 
-router.route("/")
-  .get(function(req, res) {
-    res.send("Hello");
-  });
 
 server = app.listen(8080);
 console.log("Express listening port: %d in %s mode.", port, app.settings.env);
